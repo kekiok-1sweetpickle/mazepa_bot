@@ -38,9 +38,9 @@ def extract_arg(arg):
 def start_command(message):
     user = message.from_user
 
-    bot.send_message(message.chat.id, "This is a bot for helping Ukraine to defend against Huilo in a cyber war.\nUsage:\n"
+    bot.send_message(message.chat.id, "This is a bot for helping Ukraine to defend against 🇷🇺Huilo in a cyber war.\nUsage:\n"
                                       "1. /bomb <url> - to start ddosing a russian pidor\n"
-                                      "2. /list - to list currently running ddoses\nSimple isn't it? Slava Ukraini!")
+                                      "2. /list - to list currently running ddoses\nSimple isn't it? 🇺🇦Slava Ukraini!")
 
 
 @bot.message_handler(commands=['bomb'])
@@ -53,7 +53,7 @@ def bomb_command(message):
 
     cyka_url = args[0]
     container = create_ddos(cyka_url)
-    bot.send_message(message.chat.id, text=f"Started bombing {get_url_from_container(container)}! Heroyam Slava!")
+    bot.send_message(message.chat.id, text=f"Started bombing {get_url_from_container(container)}! 🇺🇦Heroyam Slava!")
     
     
 def get_ddos_list(page):
@@ -89,9 +89,14 @@ def get_url_from_container(container):
 def job_callback_handler(call):
     if 'ddos_remove' in call.data:
         container = search_container_by_name(get_context(call))
+        ddos_list_text, ddoslist_keyboard = get_ddos_list(page=0)
+
+        bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                              text=f"{ddos_list_text}\n\nWait a bit for a container to stop!",
+                              reply_markup=ddoslist_keyboard)
+
         container.stop()
         
-        ddos_list_text, ddoslist_keyboard = get_ddos_list(page=0)
         bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
                               text=f"{ddos_list_text}\n\nStopped!",
                               reply_markup=ddoslist_keyboard)
