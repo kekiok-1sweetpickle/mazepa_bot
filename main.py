@@ -96,7 +96,8 @@ def job_callback_handler(call):
                               reply_markup=ddoslist_keyboard)
 
         container.stop()
-        
+
+        ddos_list_text, ddoslist_keyboard = get_ddos_list(page=0)
         bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
                               text=f"{ddos_list_text}\n\nStopped!",
                               reply_markup=ddoslist_keyboard)
