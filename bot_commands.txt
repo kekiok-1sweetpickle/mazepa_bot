@@ -1,0 +1,4 @@
+list - Get a list of DDOS containers
+bomb - Start DDOS on url
+help - Get help
+stop - Stop DDOS on url
