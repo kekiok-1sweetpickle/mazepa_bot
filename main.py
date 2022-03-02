@@ -26,7 +26,7 @@ def readable_url(url):
 
 
 def create_ddos(cyka_url='www.fsb.ru'):
-    return docker_client.containers.run(image='nitupkcuf/ddos-ripper:latest', name=f"ddos_{cyka_url.replace('.', '_')}_{uuid4().hex}",
+    return docker_client.containers.run(image='nitupkcuf/ddos-ripper:latest', name=f"ddos_{cyka_url.replace('.', '_').replace('-', '__')}_{uuid4().hex[:8]}",
                                         remove=True, command=cyka_url, detach=True)
 
 
@@ -82,7 +82,7 @@ def search_container_by_name(container_name):
 
 
 def get_url_from_container(container):
-    return f"{re.search('^ddos_(.*)_', container.name).groups()[0].replace('_', '.')}"
+    return f"{re.search('^ddos_(.*)_', container.name).groups()[0].replace('__', '-').replace('_', '.')}"
     
     
 @bot.callback_query_handler(func=lambda call: 'ddos_' in call.data)
